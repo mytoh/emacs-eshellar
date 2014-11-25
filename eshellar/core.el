@@ -5,9 +5,13 @@
 (require 'cl-lib)
 (require 'eshellar-vars "eshellar/vars")
 
-(cl-defun eshellar:init (&optional directory)
-  (cl-letf* ((dir (if directory directory
-                    eshellar))
+(cl-defun eshellar:init ()
+  (cl-mapc
+   'eshellar:init-cellar
+   eshellar:cellars))
+
+(cl-defun eshellar:init-cellar (directory)
+  (cl-letf* ((dir (expand-file-name directory))
              (bottles (eshellar:list-bottles dir)))
     (cl-mapc
      'eshellar:load-bottle
@@ -22,9 +26,18 @@
       nil)))
 
 (cl-defun eshellar:load-bottle (bottle)
+  (eshellar:bottle-init-el bottle)
+  (eshellar:bottle-bin-path bottle))
+
+(cl-defun eshellar:bottle-init-el (bottle)
   (cl-letf ((init (expand-file-name "init.el" bottle)))
     (if (file-exists-p init)
         (load init))))
+
+(cl-defun eshellar:bottle-bin-path (bottle)
+  (cl-letf ((bin (file-name-as-directory (expand-file-name "bin" bottle))))
+    (if (file-directory-p bin)
+        (eshellar:add-exec-path bin))))
 
 (provide 'eshellar-core)
 
