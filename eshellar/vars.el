@@ -2,7 +2,8 @@
 
 ;;; Code:
 
-(defcustom eshellar (expand-file-name "eshellar" user-emacs-directory)
+(defcustom eshellar:cellars
+  (list (expand-file-name "eshellar" user-emacs-directory))
   "Directory to store bottles")
 
 (defcustom eshellar:bottles '()
