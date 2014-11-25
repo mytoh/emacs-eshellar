@@ -31,6 +31,8 @@
     (if (file-exists-p init)
         (load init))))
 
+(require 'eshellar-util "eshellar/util")
+
 (provide 'eshellar)
 
 ;;; eshellar.el ends here
