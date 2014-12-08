@@ -7,14 +7,14 @@
 
 (cl-defun eshellar:init ()
   (cl-mapc
-   'eshellar:init-cellar
+   #'eshellar:init-cellar
    eshellar:cellars))
 
 (cl-defun eshellar:init-cellar (directory)
   (cl-letf* ((dir (expand-file-name directory))
              (bottles (eshellar:list-bottles dir)))
     (cl-mapc
-     'eshellar:load-bottle
+     #'eshellar:load-bottle
      bottles)))
 
 (cl-defun eshellar:list-bottles (dir)
