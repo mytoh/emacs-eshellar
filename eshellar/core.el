@@ -3,24 +3,25 @@
 ;;; Code:
 
 (require 'cl-lib)
+(require 'seq)
 (require 'eshellar-vars "eshellar/vars")
 
 (cl-defun eshellar:init ()
-  (cl-mapc
+  (seq-each
    #'eshellar:init-cellar
    eshellar:cellars))
 
 (cl-defun eshellar:init-cellar (directory)
   (cl-letf* ((dir (expand-file-name directory))
              (bottles (eshellar:list-bottles dir)))
-    (cl-mapc
+    (seq-each
      #'eshellar:load-bottle
      bottles)))
 
 (cl-defun eshellar:list-bottles (dir)
   (cl-letf ((bot-dir (expand-file-name "bottles" dir)))
     (if (file-exists-p bot-dir)
-        (cl-mapcar
+        (seq-map
          (lambda (b) (expand-file-name (symbol-name b) bot-dir))
          eshellar:bottles)
       nil)))
