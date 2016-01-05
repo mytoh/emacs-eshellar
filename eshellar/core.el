@@ -33,7 +33,7 @@
 (cl-defun eshellar:bottle-init-el (bottle)
   (cl-letf ((init (expand-file-name "init.el" bottle)))
     (if (file-exists-p init)
-        (load init))))
+        (load-file init))))
 
 (cl-defun eshellar:bottle-bin-path (bottle)
   (cl-letf ((bin (file-name-as-directory (expand-file-name "bin" bottle))))
